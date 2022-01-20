@@ -9,14 +9,17 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient({
 
 exports.randomPartOfSpeech = async (req, res) => {
   const { part } = req.params;
+  const { letter } = req.query;
   const params = {
     TableName: 'english-dict',
-    FilterExpression: '#pos = :pos',
+    FilterExpression: `#pos = :pos AND contains(#word, :word)`,
     ExpressionAttributeNames: {
       '#pos': 'pos',
+      '#word': 'word',
     },
     ExpressionAttributeValues: {
       ':pos': PART_OF_SPEECH_DICT[part.toLowerCase()],
+      ':word': letter ? letter.toUpperCase() : '',
     },
   };
   try {
