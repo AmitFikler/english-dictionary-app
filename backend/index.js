@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 
 const wordRouter = require('./routers/word');
+const partOfSpeechRouter = require('./routers/partOfSpeech');
+
 const port = process.env.PORT;
 
 const app = express();
@@ -15,6 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/word', wordRouter);
+app.use('/part-of-speech', partOfSpeechRouter);
 
 app.listen(port, () => {
   console.log(`app listening at http://localhost:${port}`);

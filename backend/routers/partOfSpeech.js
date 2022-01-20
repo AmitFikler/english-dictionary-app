@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { randomPartOfSpeech } = require('../controllers/partOfSpeech');
 
-router.get('/:word', findWord);
-
-router.get('/:word/:partOfSpeech', findWordWithPos);
+router.get('/:part', randomPartOfSpeech);
 
 module.exports = router;
