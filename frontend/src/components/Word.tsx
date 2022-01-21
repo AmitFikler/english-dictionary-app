@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+
+import { useNavigate, useParams } from 'react-router-dom';
 import { WordObj } from '../../@types/wordtype';
 
 function Word() {
@@ -8,11 +9,15 @@ function Word() {
   const [definition, setDefinition] = useState<WordObj[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    getDefinition();
+    if (word) {
+      getDefinition(word);
+    }
   }, []);
 
-  const getDefinition = async () => {
+  const getDefinition = async (word: string) => {
     try {
       const response = await axios.get(`http://localhost:3001/word/${word}`);
       setDefinition(response.data);
@@ -21,12 +26,18 @@ function Word() {
       console.log(error);
     }
   };
+  const navigating = (word: string) => {
+    if (word) {
+      const cleanWord = word.replace(/[^a-zA-Z ]/g, '');
+      setIsLoading(true);
+      navigate('/word/' + cleanWord);
+      getDefinition(cleanWord);
+    }
+  };
 
-  return (
-    <>
-      {isLoading ? <span className="loader"></span> : ''}
-      {definition.map((word) => {
-        console.log(word.definitions);
+  const checkDefinition = () => {
+    if (definition.length) {
+      return definition.map((word) => {
         return (
           <div>
             <h1>
@@ -35,15 +46,38 @@ function Word() {
             {word.definitions.map((defin, i) => (
               <div>
                 <p>
-                  {i + 1}.{defin}
+                  {i + 1}.{' '}
+                  {defin.split(' ').map((word) => {
+                    return (
+                      <span
+                        onClick={() => {
+                          navigating(word);
+                        }}
+                      >
+                        {word}
+                        {'  '}
+                      </span>
+                    );
+                  })}
                 </p>
                 <br />
               </div>
             ))}
           </div>
         );
-      })}
-    </>
+      });
+    } else {
+      return (
+        <div>
+          <h2>The word does not exist in our dictionary</h2>
+          <h4>Try another word.</h4>
+        </div>
+      );
+    }
+  };
+
+  return (
+    <>{isLoading ? <span className="loader"></span> : checkDefinition()}</>
   );
 }
 
