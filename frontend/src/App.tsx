@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Word from './components/Word';
 import SearchAppBar from './components/SearchAppBar';
 import PartOfSpeechComp from './components/PartOfSpeech';
+import HomePage from './components/HomePage';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <SearchAppBar />
       <Router>
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/word/:word" element={<Word />} />
           <Route
             path="/part-of-speech/:partOfSpeech"
