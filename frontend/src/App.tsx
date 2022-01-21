@@ -12,7 +12,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/word/:word" element={<Word />} />
+          <Route path="/word/:word/:partOfSpeech" element={<Word />} />
           <Route
             path="/part-of-speech/:partOfSpeech"
             element={<PartOfSpeechComp />}

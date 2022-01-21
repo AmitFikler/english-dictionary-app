@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { WordObj } from '../../@types/wordtype';
 
 function Word() {
-  const { word } = useParams();
+  const { word, partOfSpeech } = useParams();
   const [definition, setDefinition] = useState<WordObj[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -19,9 +19,21 @@ function Word() {
 
   const getDefinition = async (word: string) => {
     try {
-      const response = await axios.get(`http://localhost:3001/word/${word}`);
-      setDefinition(response.data);
-      setIsLoading(false);
+      if (partOfSpeech) {
+        if (partOfSpeech === 'All') {
+          const response = await axios.get(
+            `http://localhost:3001/word/${word}`
+          );
+          setDefinition(response.data);
+          setIsLoading(false);
+        } else {
+          const response = await axios.get(
+            `http://localhost:3001/word/${word}/${partOfSpeech}`
+          );
+          setDefinition(response.data);
+          setIsLoading(false);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +42,7 @@ function Word() {
     if (word) {
       const cleanWord = word.replace(/[^a-zA-Z ]/g, '');
       setIsLoading(true);
-      navigate('/word/' + cleanWord);
+      navigate('/word/' + cleanWord + '/All');
       getDefinition(cleanWord);
     }
   };
@@ -43,26 +55,28 @@ function Word() {
             <h1>
               {word.word}-<i>{word.pos}</i>
             </h1>
-            {word.definitions.map((defin, i) => (
-              <div>
-                <p>
-                  {i + 1}.{' '}
-                  {defin.split(' ').map((word) => {
-                    return (
-                      <span
-                        onClick={() => {
-                          navigating(word);
-                        }}
-                      >
-                        {word}
-                        {'  '}
-                      </span>
-                    );
-                  })}
-                </p>
-                <br />
-              </div>
-            ))}
+            <div>
+              {word.definitions.map((defin, i) => (
+                <div className="word-def">
+                  <p>
+                    {i + 1}.{' '}
+                    {defin.split(' ').map((word) => {
+                      return (
+                        <span
+                          onClick={() => {
+                            navigating(word);
+                          }}
+                          className="word-splits"
+                        >
+                          {word}
+                          {'  '}
+                        </span>
+                      );
+                    })}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         );
       });
