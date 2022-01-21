@@ -18,9 +18,7 @@ function HomePage() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    if (part === 'All') {
-      navigate('/word/' + input);
-    }
+    navigate('/word/' + input + '/' + part);
   };
 
   const handleChange = (event: SelectChangeEvent) => {
