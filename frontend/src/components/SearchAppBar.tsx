@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,6 +7,10 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import { Divider, Link, ListItem, SwipeableDrawer } from '@mui/material';
+import { ChevronLeft } from '@mui/icons-material';
+import { PART_OF_SPEECH_DICT } from '../helpers/partOfSpeech';
+import { useRef, useState } from 'react';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,6 +55,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
+  const [open, setOpen] = useState<boolean>(false);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -62,6 +66,7 @@ export default function SearchAppBar() {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
+            onClick={() => setOpen(true)}
           >
             <MenuIcon />
           </IconButton>
@@ -71,7 +76,7 @@ export default function SearchAppBar() {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            Dictionary
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -83,6 +88,26 @@ export default function SearchAppBar() {
             />
           </Search>
         </Toolbar>
+        <SwipeableDrawer
+          open={open}
+          anchor="left"
+          onOpen={() => setOpen(true)}
+          onClose={() => setOpen(false)}
+        >
+          <IconButton onClick={() => setOpen(false)}>
+            <ChevronLeft />
+          </IconButton>
+          <Divider />
+          {PART_OF_SPEECH_DICT.map((part) => {
+            return (
+              <ListItem>
+                <Link color="textPrimary" variant="button" underline="none">
+                  {part}
+                </Link>
+              </ListItem>
+            );
+          })}
+        </SwipeableDrawer>
       </AppBar>
     </Box>
   );

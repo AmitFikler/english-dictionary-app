@@ -1,16 +1,15 @@
 import './App.css';
-import SearchInput from './components/Search';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Word from './components/Word';
+import SearchAppBar from './components/SearchAppBar';
 
 function App() {
   return (
     <>
-      <h1 className="title">Dictionary</h1>
-      <SearchInput />
+      <SearchAppBar />
       <Router>
         <Routes>
-          <Route path={`/:word`} element={<Word />} />
+          <Route path="/:word" element={<Word />} />
         </Routes>
       </Router>
     </>
