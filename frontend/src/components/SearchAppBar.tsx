@@ -98,10 +98,25 @@ export default function SearchAppBar() {
             <ChevronLeft />
           </IconButton>
           <Divider />
+          <ListItem>
+            <Link
+              color="textPrimary"
+              variant="button"
+              underline="none"
+              href={`/`}
+            >
+              Home
+            </Link>
+          </ListItem>
           {PART_OF_SPEECH_DICT.map((part) => {
             return (
-              <ListItem>
-                <Link color="textPrimary" variant="button" underline="none">
+              <ListItem key={part}>
+                <Link
+                  color="textPrimary"
+                  variant="button"
+                  underline="none"
+                  href={`/part-of-speech/${part}`}
+                >
                   {part}
                 </Link>
               </ListItem>
