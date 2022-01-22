@@ -18,9 +18,7 @@ function PartOfSpeechComp() {
 
   const getRandomDefinition = async (part: string) => {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/part-of-speech/${part}`
-      );
+      const response = await axios.get(`/part-of-speech/${part}`);
       setDefinition(response.data);
       setIsLoading(false);
     } catch (error) {

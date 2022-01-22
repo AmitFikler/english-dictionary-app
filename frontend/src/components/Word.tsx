@@ -21,15 +21,11 @@ function Word() {
     try {
       if (partOfSpeech) {
         if (partOfSpeech === 'All') {
-          const response = await axios.get(
-            `http://localhost:3001/word/${word}`
-          );
+          const response = await axios.get(`/word/${word}`);
           setDefinition(response.data);
           setIsLoading(false);
         } else {
-          const response = await axios.get(
-            `http://localhost:3001/word/${word}/${partOfSpeech}`
-          );
+          const response = await axios.get(`/word/${word}/${partOfSpeech}`);
           setDefinition(response.data);
           setIsLoading(false);
         }

@@ -19,6 +19,12 @@ app.get('/', (req, res) => {
 app.use('/word', wordRouter);
 app.use('/part-of-speech', partOfSpeechRouter);
 
-app.listen(port, () => {
+app.use('/', express.static(path.resolve('./build'))); // serve main path as static dir
+app.get('/', function (req, res) {
+  // serve main path as static file
+  res.sendFile(path.resolve('./build/index.html'));
+});
+
+app.listen(process.env.PORT || port, () => {
   console.log(`app listening at http://localhost:${port}`);
 });
