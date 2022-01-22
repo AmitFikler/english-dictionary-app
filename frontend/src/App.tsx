@@ -14,7 +14,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/word/:word/:partOfSpeech" element={<Word />} />
           <Route
-            path="/part-of-speech/:partOfSpeech"
+            path="/partOf-speech/:partOfSpeech"
             element={<PartOfSpeechComp />}
           />
         </Routes>
