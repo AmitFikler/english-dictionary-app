@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const wordRouter = require('./routers/word');
 const partOfSpeechRouter = require('./routers/partOfSpeech');
+const path = require('path');
 
 const port = process.env.PORT;
 
