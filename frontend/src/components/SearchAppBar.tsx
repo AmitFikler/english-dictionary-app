@@ -62,7 +62,7 @@ export default function SearchAppBar() {
                   color="textPrimary"
                   variant="button"
                   underline="none"
-                  href={`/partOf-speech/${part}`}
+                  href={`http://localhost:3000/partOf-speech/${part}`}
                 >
                   {part}
                 </Link>
